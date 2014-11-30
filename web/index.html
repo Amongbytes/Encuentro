@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+ <title>Encuentro</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <link rel="stylesheet" href="normalize.css" type="text/css" />
+ <link rel="stylesheet" href="main.css" type="text/css" />
+ <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin"> 
+</head>
+
+<body> 
+
+<div id="page">
+ <div id="header">
+  <img id="logo" alt="Visualizador de contenidos del Canal Encuentro y otros" src="imgs/title.png" />
+  <h1>Visualizador de contenidos del Canal Encuentro y otros</h1>
+ </div>
+
+ <div id="content">
+  <div class="section" id="section-about">
+   <p>
+     Busque, descargue, y vea el maravilloso contenido ofrecido por el Canal Encuentro, Paka Paka, BACUA, Educ.ar y otros.
+   </p>
+     
+   <p>
+    Este es un simple programa que permite buscar, descargar y ver contenido de Encuentro y otros canales. Notar que este programa no distribuye contenido directamente, sino que permite un mejor uso personal de esos contenidos.
+   </p>
+   
+   <p>
+   Por favor, referirse a los sitios web correspondientes para saber qué se puede y qué no se puede hacer con los contenidos de tales sitios.
+   </p>
+
+   <p>
+    <b>Nota importante:</b> Si tenés una versión anterior a la 2.0, el programa no te va a funcionar correctamente. Tenés que actualizar sí o sí la versión. Esto es porque Encuentro y Conectate reconfiguraron sus portales, por lo que las versiones viejas no te van a funcionar correctamente.
+   </p>
+  </div>
+
+  <div class="section" id="section-screenshots">
+
+   <ul class="image-list">
+    <li><a href="imgs/screenshot1.png" alt="screenshot"><img src="imgs/ssth1.png" /></a></li>
+    <li><a href="imgs/screenshot2.png" alt="screenshot"><img src="imgs/ssth2.png" /></a></li>
+   </ul>
+  </div>
+
+  <div class="section" id="section-gametypes">
+   <h2>Instalar</h2>
+
+   <ul class="download-list">
+    <li>Para Debian/Ubuntu usá <a href="http://launchpad.net/encuentro/trunk/2.1/+download/encuentro-2.1.deb">este instalador (.deb)</a></li>
+    <li>Si estás en Windows, usá <a href="http://launchpad.net/encuentro/trunk/2.1/+download/encuentro-2.1-setup.exe">este instalador (.exe)</a>.</li> 
+    <li>Instalarlo en Arch es sencillo ya que está disponible en AUR; por ejemplo, se puede hacer:
+<pre>
+    yaourt -S encuentro
+</pre>
+    <li>Podés descargar el <a href="http://launchpad.net/encuentro/trunk/2.1/+download/encuentro-2.1.tar.gz">tarball multiplatforma</a> e instalarlo a la manera antigua.</li>
+    <li>Si estás en Fedora o Red Hat, muy pronto vas a poder disfrutar de la versión en los repos, o el .rpm para descargar, mientras tanto usá el tarball...</li> 
+
+    <li>Nota: no hay más PPAs para estar automáticamente actualizado en Debian/Ubuntu, porque en esta oportunidad no pude hacer andar toda la maldita maquinaria para generarlos.</li>
+
+    <li>También se puede instalar directamente desde PyPI (no sé cómo se maneja el tema de las dependencias, acá):
+<pre>
+    sudo easy_install encuentro
+</pre>
+
+   </ul>
+  </div>
+
+  </div>
+
+  <div class="section" id="section-devs">
+   <h2>Desarrolladores, desarrolladores, desarrolladores</h2>
+
+    <ul>
+        <li><i>Encuentro</i> está totalmente desarrollado en <a href="http://python.org">Python</a></li>
+        <li>el desarrollador principal es <a href="https://twitter.com/facundobatista">Facundo Batista</a></li>
+        <li>podés ayudar, enviar reportes de bugs, etcétera, en la <a href="http://launchpad.net/encuentro">página del proyecto</a></li>
+        <li>gracias a <a href="https://twitter.com/dmascialino">Diego Mascialino</a> por el empaquetado para Arch.</li>
+    </ul>
+  </div>
+
+  <div class="section" id="section-devs">
+   <h2>Donar</h2>
+
+   Si te gustó el programa, hay dos formas de agradecerme (¡podés hacer ambas!):
+   
+   <ul>
+     <li> <a href="http://python.com.ar/pyar/Donaciones">Doná</a> algo de dinero a Python Argentina (después de todo, recibí un montón de ayuda de ellos)</li>
+     <li>Invitame una cerveza si alguna vez nos vemos</li>
+   </ul>
+  </div>
+
+  <div class="section" id="section-devs">
+   <h2>Historial</h2>
+
+   La versión actual es la 2.1:
+   
+   <ul>
+    <li><b>Nuevo backend para 'Decime Quien Sos Vos'</b></li>
+    <li>Se autentica correctamente en Conectate, lo que implica mejor calidad de videos descargados</li>
+    <li>Evita explotar por la mala interacción entre PyQt y pynotify en algunos sistemas</li>
+    <li>Se arregló la conservación del estado de ordenamiento de las columnas entre ejecuciones</li>
+    <li>Es más robusto frente a problemas al guardar la configuración o metadata</li>
+    <li>Tiene un mejor parseo para Bacua y otros backends; se mejoraron las herramientas en general</li>
+    <li>No se loguea más algunos parámetros sensibles a nivel seguridad</li>
+   </ul>
+
+   Cambios para la versión 2.0.x:
+   
+   <ul>
+    <li><b>Vuelve a funcionar luego de los cambios de backend de Encuentro y Conectate</b></li>
+    <li>Maneja las temporadas de los programas; no se repiten nombres y graba agrupado a disco</li>
+    <li>Sólo anota (y no requiere aprobación del usuario) al tener errores en la descarga</li>
+    <li>Mejor manejo de las imágenes de los episodios, con lo cual ahora se ven las de Bacua</li>
+    <li>Actualiza automáticamente la metadata si se la encuentra demasiado desactualizada</li>
+    <li>El proyecto tiene menos dependencias, es más simple hacerlo funcionar en más sistemas</li>
+    <li>Soporta ser ejecutado en un virtualenv</li>
+    <li>Varias correcciones y detalles para hacerlo más usable y robusto</li>
+   </ul>
+
+   Cambios para la versión 1.1:
+   
+   <ul>
+    <li><b>Corregido el problema de autenticación luego de unos cambios en el servicio</b></li>
+    <li>Mejor manejo de error en las descargas, ahora no se traba en los errores de red</li>
+    <li>Errores de red expuestos más claros al usuario y en el log</li>
+    <li>Mejor parseo de las páginas de los servicios</li>
+    <li>El campo de contraseña es opcionalmente ocultado</li>
+    <li>Se puede elegir via la interfaz al directorio de descargas</li>
+   </ul>
+
+   Cambios para la versión 1.0:
+   
+   <ul>
+    <li><b>¡Ahora funciona en Windows!</b></li>
+    <li>Usamos Qt para la interfaz gráfica</li>
+    <li>Se hicieron algunos ajustes en la forma de empaquetado</li>
+    <li>Tenemos otras pequeñas mejoras y correcciones</li>
+   </ul>
+
+   Cambios para la versión 0.9:
+   
+   <ul>
+    <li><b>Hay un nuevo backend! <a href="http://www.bacua.gob.ar/">Banco Audiovisual de Contenidos Universales Argentino</a></b></li>
+    <li>Se muestran imágenes para cada episodio</li>
+    <li>Hay una cola explícita de descargas, mostrando los estados de todas las transferencias</li>
+    <li>Las descargas terminadas se pueden filtrar por separado</li>
+    <li>Mejor manejo de las cancelaciones, más logging, y otras pequeñas mejoras y correcciones</li>
+   </ul>
+
+   Cambios para la versión 0.8:
+   
+   <ul>
+    <li><b>Soporte para múltiples fuentes de datos. Ahora también baja los episodios perdidos de la web de Encuentro.</b></li>
+    <li>Corregido el problema que hacía perder las actualizaciones cuando se reordenaba o filtraba (dando la impresión que los downloads se trababan).</li>
+    <li>Mejor uso de nombres y directorios al grabar los videos.</li>
+    <li>Otras pequeñas mejoras y correcciones.</li>
+   </ul>
+
+   Cambios para la versión 0.7:
+   
+   <ul>
+     <li><b>El programa Encuentro funciona con todo el contenido de Conectate.</b></li>
+     <li>Se mejoró el título de la columna Duración.</li>
+     <li>Notificaciones cuando termina una descarga (configurable).</li>
+     <li>Icono de estado en el systray.</li>
+     <li>Mostramos la descripción del episodio al dejar el mouse quieto en la linea.</li>
+     <li>Ahora tenemos un menú.</li>
+   </ul>
+
+   Cambios para la versión 0.5:
+   
+   <ul>
+     <li>Se puede autorefrescar la lista de episodios al inicio (si lo dice la config)</li>
+     <li>El filtro ahora funciona también sobre la columna de Sección</li>
+     <li>Soporta mejor los episodios que fueron borrados del disco</li>
+     <li>También hay algunas pequeñas mejoras y otros detalles corregidos</li>
+   </ul>
+
+   Cambios para la versión 0.4:
+   
+   <ul>
+     <li>Ahora se puede filtrar todos los programas para encontrarlos más fácil.</li>
+     <li>¡Tenemos una versión para Windows! (gracias Javier Andalia)</li>
+     <li>¡Tenemos un instalador para Arch Linux! (gracias Diego Mascialino)</li>
+     <li>Mostramos versiones de todas las bibliotecas usadas al arrancar.</li>
+     <li>Mejor info de error si no se encuentra alguna biblioteca.</li>
+     <li>Correcciones pequeñas, y más control de errores...</li>
+   </ul>
+
+   Cambios para la versión 0.3:
+   
+   <ul>
+     <li>Ahora podés poner al mismo tiempo a bajar muchos episodios (se encolan).</li>
+     <li>¡Soportamos botón derecho! Hacé click en cualquier episodio y fijate las opciones.</li>
+     <li>Las descargas ahora pueden cancelarse.</li>
+     <li>Menos dependencias: no más zope, y uso json de la biblioteca estándar.</li>
+     <li>También corregí algunos problemillas, y limpié un poco el código.</li>
+   </ul>
+
+   La primera versión que se liberó al público, la 0.2, tenía estos detalles como los más importantes:
+   
+   <ul>
+     <li>Se pueden encolar descargas de episodios, que luego irán bajando uno por uno.</li>
+     <li>Permite una visualización directa de los episodios desde el programa.</li>
+     <li>Se mantiene y muestra el estado de cada episodio.</li>
+     <li>La lista e información de los episodios se descarga automáticamente del server, para un mejor arranque.</li>
+     <li>Configuración de parámetros, con un wizard para realizar más fácilmente la configuración necesaria.</li>
+     <li>Descargable como tarball (multiplataforma), con un instalador para Debian/Ubuntu, e incluso con un PPA para suscribirse.</li>
+   </ul>
+  </div>
+
+ </div>
+
+ <div id="footer">
+  <p>Copyright 2011-2014 - Facundo Batista (<a href="http://taniquetil.com.ar/plog/">blog</a>, <a href="https://twitter.com/facundobatista">twitter</a>)</p>
+  <p>Asesor de estilo: Mariano Guerra</p>
+ </div>
+</div>
+
+</body>
+</html>

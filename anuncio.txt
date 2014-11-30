@@ -1,0 +1,62 @@
+
+Encuentro 2.1
+
+Encuentro es un simple programa que permite buscar, descargar y ver contenido del Canal Encuentro, Paka Paka, BACUA, Educ.ar y otros.
+
+Notar que este programa no distribuye contenido directamente, sino que permite un mejor uso personal de esos contenidos.  Por favor, referirse a los sitios web correspondientes para saber qué se puede y qué no se puede hacer con los contenidos de tales sitios.
+
+Página oficial:
+
+    http://encuentro.taniquetil.com.ar/
+
+
+La versión 2.1 trae los siguientes cambios con respecto a la versión anterior:
+
+    - Nuevo backend para 'Decime Quien Sos Vos'
+
+    - Se autentica correctamente en Conectate, lo que implica mejor calidad de videos descargados
+
+    - Evita explotar por la mala interacción entre PyQt y pynotify en algunos sistemas
+
+    - Se arregló la conservación del estado de ordenamiento de las columnas entre ejecuciones
+
+    - Es más robusto frente a problemas al guardar la configuración o metadata
+
+    - Tiene un mejor parseo para Bacua y otros backends; se mejoraron las herramientas en general
+
+    - No se loguea más algunos parámetros sensibles a nivel seguridad
+
+
+La forma más fácil de instalarlo, si tienen un Debian o Ubuntu, es usando este instalador:
+
+    http://launchpad.net/encuentro/trunk/2.1/+download/encuentro-2.1.deb
+
+
+También tenemos instalador para Windows:
+
+    http://launchpad.net/encuentro/trunk/2.1/+download/encuentro-2.1-setup.exe
+
+
+Instalarlo en Arch es sencillo ya que está disponible en AUR, por ejemplo se puede hacer:
+
+    yaourt -S encuentro
+
+
+También se puede instalar directamente desde PyPI:
+
+    sudo easy_install encuentro
+
+
+En cualquier otro caso, pueden usar el tarball para instalarlo:
+
+    http://launchpad.net/encuentro/trunk/2.1/+download/encuentro-2.1.tar.gz
+
+
+Si tienen Fedora o Red Hat, todavía no tenemos un instalador, pero lo pueden instalar o usar desde el tarball, como acabo de indicar.
+
+Nota: no hay más PPAs para estar automáticamente actualizado en Debian/Ubuntu, porque en esta oportunidad no pude hacer andar toda la maldita maquinaria.
+
+
+Recuerden revisar el archivo AYUDA.txt si tienen alguna duda de cómo usar el programa.
+
+¡Que lo disfruten!
