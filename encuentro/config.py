@@ -21,7 +21,7 @@ try:
     import keyring
 except ImportError:
     keyring = None
-    print u"""ERROR! Problema al importar 'keyring' - Es necesario para el administrador de cuentas."""
+    print u"""ATENCIÓN: no se encontró el módulo 'keyring', si lo instala Encuentro lo usará para guardar información sensible (en lugar de bajarla a disco)."""
 
 import logging
 import os
@@ -66,12 +66,10 @@ class _Config(dict):
 
         with open(fname, 'rb') as fh:
             saved_dict = pickle.load(fh)
-              if keyring is not None:
+            if keyring is not None:
                 for value in SECURITY_CONFIG:
                     if saved_dict.get(value, []) is None:
                         saved_dict[value] = keyring.get_password('encuentro', value)
-                    else:
-                        pass
             logger.debug("Loaded: %s", self.sanitized_config())
         self.update(saved_dict)
 
@@ -84,10 +82,7 @@ class _Config(dict):
         # we don't want to pickle this class, but the dict itself
         raw_dict = self.copy()
         for value in SECURITY_CONFIG:
-            if raw_dict.get(value, []) is None:
-                keyring.set_password('encuentro', value, raw_dict.pop(value))
-            else:
-                pass
+            keyring.set_password('encuentro', value, raw_dict.pop(value))
         logger.debug("Saving: %s", self.sanitized_config())
         with utils.SafeSaver(self._fname) as fh:
             pickle.dump(raw_dict, fh)
