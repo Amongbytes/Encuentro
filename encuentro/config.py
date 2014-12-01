@@ -16,7 +16,7 @@
 #
 # For further info, check  https://launchpad.net/encuentro
 
-"""The system configuration."""
+ """The system configuration."""
 try:
     import keyring
 except ImportError:
@@ -71,6 +71,8 @@ class _Config(dict):
             if "keyring" in sys.modules:
                 for value in SECURITY_CONFIG:
                     if saved_dict.get(value, []):
+                        pass
+                    else:
                         saved_dict[value] = keyring.get_password('encuentro', value)
             logger.debug("Loaded: %s", self.sanitized_config())
         self.update(saved_dict)
@@ -86,6 +88,7 @@ class _Config(dict):
         if "keyring" in sys.modules:
             for value in SECURITY_CONFIG:
                 if raw_dict.get(value, []):
+                else:
                     keyring.set_password('encuentro', value, raw_dict.pop(value))
         logger.debug("Saving: %s", self.sanitized_config())
         with utils.SafeSaver(self._fname) as fh:
@@ -113,4 +116,4 @@ class _Signal(object):
 
 
 config = _Config()
-signal = _Signal()s
+signal = _Signal()
