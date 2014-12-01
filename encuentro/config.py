@@ -88,6 +88,7 @@ class _Config(dict):
         if "keyring" in sys.modules:
             for value in SECURITY_CONFIG:
                 if raw_dict.get(value, []):
+                    pass
                 else:
                     keyring.set_password('encuentro', value, raw_dict.pop(value))
         logger.debug("Saving: %s", self.sanitized_config())
