@@ -17,10 +17,17 @@
 # For further info, check  https://launchpad.net/encuentro
 
 """The system configuration."""
+try:
+    import keyring
+except ImportError:
+    print u"""
+ERROR! Problema al importar 'keyring' - Es necesario para el administrador de cuentas.
+"""
 
 import logging
 import os
 import pickle
+import sys
 
 from encuentro import utils
 
@@ -61,6 +68,10 @@ class _Config(dict):
 
         with open(fname, 'rb') as fh:
             saved_dict = pickle.load(fh)
+            if "keyring" in sys.modules:
+                for value in SECURITY_CONFIG:
+                    if saved_dict.get(value, []):
+                        saved_dict[value] = keyring.get_password('encuentro', value)
             logger.debug("Loaded: %s", self.sanitized_config())
         self.update(saved_dict)
 
@@ -72,6 +83,10 @@ class _Config(dict):
         """Save the config to disk."""
         # we don't want to pickle this class, but the dict itself
         raw_dict = self.copy()
+        if "keyring" in sys.modules:
+            for value in SECURITY_CONFIG:
+                if raw_dict.get(value, []):
+                    keyring.set_password('encuentro', value, raw_dict.pop(value))
         logger.debug("Saving: %s", self.sanitized_config())
         with utils.SafeSaver(self._fname) as fh:
             pickle.dump(raw_dict, fh)
@@ -98,4 +113,4 @@ class _Signal(object):
 
 
 config = _Config()
-signal = _Signal()
+signal = _Signal()s
