@@ -16,7 +16,7 @@
 #
 # For further info, check  https://launchpad.net/encuentro
 
- """The system configuration."""
+"""The system configuration."""
 try:
     import keyring
 except ImportError:
@@ -39,6 +39,7 @@ SECURITY_CONFIG = ['user', 'password']
 
 
 class _Config(dict):
+
     """The configuration."""
 
     SYSTEM = 'system'
@@ -69,7 +70,8 @@ class _Config(dict):
             if keyring is not None:
                 for value in SECURITY_CONFIG:
                     if saved_dict.get(value, []) is None:
-                        saved_dict[value] = keyring.get_password('encuentro', value)
+                        saved_dict[value] = keyring.get_password(
+                            'encuentro', value)
             logger.debug("Loaded: %s", self.sanitized_config())
         self.update(saved_dict)
 
@@ -82,13 +84,15 @@ class _Config(dict):
         # we don't want to pickle this class, but the dict itself
         raw_dict = self.copy()
         for value in SECURITY_CONFIG:
-            keyring.set_password('encuentro', value, raw_dict.pop(value))
+            if keyring.get_keyring() is not None:
+                keyring.set_password('encuentro', value, raw_dict.pop(value))
         logger.debug("Saving: %s", self.sanitized_config())
         with utils.SafeSaver(self._fname) as fh:
             pickle.dump(raw_dict, fh)
 
 
 class _Signal(object):
+
     """Custom signals.
 
     Decorate a function to be called when signal is emitted.
