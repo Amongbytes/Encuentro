@@ -54,12 +54,9 @@ URL_EPIS_BASE = (
     "%(channel_id)s?rec_id=%(epis_id)s"
 )
 URL_IMAGE_BASE = (
-    "http://globalbackend.educ.ar/repositorio/Imagen/ver?image_id=%(img_id)s"
+    "http://repositorioimagen-download.educ.ar/repositorio/Imagen/ver?image_id=%(img_id)s"
 )
-
-URL_SEARCH = (
-    "http://www.conectate.gob.ar/sitios/conectate/busqueda/%(channel_id)s"
-)
+URL_SEARCH = "http://www.conectate.gob.ar/sitios/conectate/busqueda/%(channel_id)s"
 
 logger = logging.getLogger("Conectate")
 
@@ -153,6 +150,9 @@ def get_episodes():
                 episodes = []
                 for master in results:
                     from_series = get_from_series(master.epis_url)
+                    if not from_series:
+                        # empty content!
+                        continue
 
                     # get the first to retrieve duration to use in them all
                     duration = get_episode_info(from_series[0][2])

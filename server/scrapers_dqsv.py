@@ -182,7 +182,11 @@ def scrap(fh, custom_order=None):
         if custom_order is None:
             idx = i
         else:
-            idx = custom_order.index(name)
+            try:
+                idx = custom_order.index(name)
+            except:
+                continue
+
         image = images[idx]
 
         ep = Episode(name=name, occup=occup, bio=bio, image=image, date=date)
@@ -196,9 +200,6 @@ if __name__ == '__main__':
         exit()
 
     custom_order = None
-    #custom_order = [
-    #    u"",
-    #]
 
     with open(sys.argv[1], 'rb') as fh:
         episodes = scrap(fh, custom_order)

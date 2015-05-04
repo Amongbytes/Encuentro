@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+#-*- coding: UTF-8 -*-
 
 # Copyright 2013 Facundo Batista
 #
@@ -18,6 +18,19 @@
 
 """The system configuration."""
 
+NOT_KEYRING_MSG = u"""
+ATENCIÓN: no se encontró el módulo 'keyring'.
+Si lo instala, Encuentro lo usará para guardar información 
+sensible (en lugar de guardarla en el archivo de configuración).
+"""
+    
+try:
+    import keyring
+except ImportError:
+    keyring = None
+    print NOT_KEYRING_MSG
+
+    
 import logging
 import os
 import pickle
@@ -61,6 +74,13 @@ class _Config(dict):
 
         with open(fname, 'rb') as fh:
             saved_dict = pickle.load(fh)
+            if keyring is not None:
+                for key in SECURITY_CONFIG:
+                    if not saved_dict.get(key):
+                        print "NO TENGO STRING"
+                    #if saved_dict.get(key, []) is not None:
+                        saved_dict[key] = keyring.get_password('encuentro', key)
+
             logger.debug("Loaded: %s", self.sanitized_config())
         self.update(saved_dict)
 
@@ -72,6 +92,10 @@ class _Config(dict):
         """Save the config to disk."""
         # we don't want to pickle this class, but the dict itself
         raw_dict = self.copy()
+        if keyring is not None:
+            for key in SECURITY_CONFIG:
+                    keyring.set_password('encuentro', key,raw_dict.pop(key))
+
         logger.debug("Saving: %s", self.sanitized_config())
         with utils.SafeSaver(self._fname) as fh:
             pickle.dump(raw_dict, fh)

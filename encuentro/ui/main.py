@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright 2013-2014 Facundo Batista
+# Copyright 2013-2015 Facundo Batista
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License version 3, as published
@@ -356,9 +356,9 @@ class MainUI(remembering.RememberingMainWindow):
 
     def download_episode(self, _=None):
         """Download the episode(s)."""
-        items = self.episodes_list.selectedItems()
-        for item in items:
-            episode = self.programs_data[item.episode_id]
+        episode_ids = self.episodes_list.selected_items()
+        for episode_id in episode_ids:
+            episode = self.programs_data[episode_id]
             self.queue_download(episode)
 
     @defer.inline_callbacks
@@ -372,7 +372,7 @@ class MainUI(remembering.RememberingMainWindow):
 
         # queue
         self.episodes_download.append(episode)
-        self.adjust_episode_info(episode)
+        self.episodes_list.episode_info.update(episode)
         self.check_download_play_buttons()
         if self.episodes_download.downloading:
             return
@@ -410,8 +410,10 @@ class MainUI(remembering.RememberingMainWindow):
                 episode.filename = filename
 
             # check buttons
-            self.adjust_episode_info(episode)
             self.check_download_play_buttons()
+
+            # adjust the episode info only if it's still showing this one
+            self.episodes_list.episode_info.update(episode, force_change=False)
 
         logger.debug("Downloads: finished")
 
@@ -441,19 +443,15 @@ class MainUI(remembering.RememberingMainWindow):
         safecfg = config.sanitized_config()
         logger.debug("Configuration changed: %s", safecfg)
 
-    def adjust_episode_info(self, episode):
-        """Adjust the episode info."""
-        self.episodes_list.episode_info.update(episode)
-
     def check_download_play_buttons(self):
         """Set both buttons state according to the selected episodes."""
-        items = self.episodes_list.selectedItems()
+        episode_ids = self.episodes_list.selected_items()
 
         # 'play' button should be enabled if only one row is selected and
         # its state is 'downloaded'
         play_enabled = False
-        if len(items) == 1:
-            episode = self.programs_data[items[0].episode_id]
+        if len(episode_ids) == 1:
+            episode = self.programs_data[episode_ids[0]]
             if episode.state == Status.downloaded:
                 play_enabled = True
         self.action_play.setEnabled(play_enabled)
@@ -464,8 +462,8 @@ class MainUI(remembering.RememberingMainWindow):
         # rows is in 'none' state, and if config is ok
         download_enabled = False
         if self.have_config():
-            for item in items:
-                episode = self.programs_data[item.episode_id]
+            for episode_id in episode_ids:
+                episode = self.programs_data[episode_id]
                 if episode.state == Status.none:
                     download_enabled = True
                     break
@@ -475,12 +473,12 @@ class MainUI(remembering.RememberingMainWindow):
 
     def on_play_action(self, _=None):
         """Play the selected episode."""
-        items = self.episodes_list.selectedItems()
-        if len(items) != 1:
+        episode_ids = self.episodes_list.selected_items()
+        if len(episode_ids) != 1:
             raise ValueError("Wrong call to play_episode, with %d selections"
-                             % len(items))
-        item = items[0]
-        episode = self.programs_data[item.episode_id]
+                             % len(episode_ids))
+        episode_id = episode_ids[0]
+        episode = self.programs_data[episode_id]
         self.play_episode(episode)
 
     def play_episode(self, episode):
