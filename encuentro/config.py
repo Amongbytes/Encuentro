@@ -75,7 +75,8 @@ class _Config(dict):
             saved_dict = pickle.load(fh)
             if keyring is not None:
                 for key in SECURITY_CONFIG:
-                    if saved_dict[key] not in keyring.get_password('encuentro', key):
+                    if saved_dict.get(key, "") not in \
+                        keyring.get_password('encuentro', key):
                         saved_dict[key] = keyring.get_password('encuentro', key)
             logger.debug("Loaded: %s", self.sanitized_config())
         self.update(saved_dict)
